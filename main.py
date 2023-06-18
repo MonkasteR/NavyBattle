@@ -1,4 +1,4 @@
-from random import randint
+import random
 
 
 class Game:
@@ -25,7 +25,7 @@ class Game:
                 attempts += 1
                 if attempts > 2000:
                     return None
-                ship = Ship(Dot(randint(0, self.size), randint(0, self.size)), l, randint(0, 1))
+                ship = Ship(Dot(random.randint(0, self.size), random.randint(0, self.size)), l, random.randint(0, 1))
                 try:
                     field.add_ship(ship)
                     break
@@ -61,11 +61,11 @@ class Game:
         while True:
             print_fields()
             if num % 2 == 0:
-                print("────" + "─" * 9 * g.size)  # Пытаемся подстроиться под изменяемый размер доски
+                print("────" + "─" * 9 * g.size)  # Пытаемся подстроиться под размер доски
                 print("Ходит пользователь!")
                 repeat = self.user.move()
             else:
-                print("────" + "─" * 9 * g.size)  # Пытаемся подстроиться под изменяемый размер доски
+                print("────" + "─" * 9 * g.size)  # Пытаемся подстроиться под размер доски
                 print("Ходит компьютер!")
                 repeat = self.ai.move()
             if repeat:
@@ -73,8 +73,8 @@ class Game:
 
             if self.ai.field.count == len(layout):  # счетчик потопленных кораблей
                 print_fields()
-                print("────" + "─" * 9 * g.size)  # Пытаемся подстроиться под изменяемый размер доски
-                print("Пользователь выиграл!")
+                print("────" + "─" * 9 * g.size)  # Пытаемся подстроиться под размер доски
+                print("Игрок победил!")
                 print(f'Вы потопили все {len(layout)} кораблей противника')
                 break
 
@@ -117,21 +117,17 @@ class User(Player):
             if len(cords) != 2:
                 print(" Введите координаты хода ")
                 continue
-
             x, y = cords
-
             if not (x.isdigit()) or not (y.isdigit()):
                 print(" Введите числа! ")
                 continue
-
             x, y = int(x), int(y)
-
             return Dot(x - 1, y - 1)
 
 
 class AI(Player):
     def ask(self):
-        d = Dot(randint(0, g.size - 1), randint(0, g.size - 1))
+        d = Dot(random.randint(0, g.size - 1), random.randint(0, g.size - 1))
         print(f"Ход компьютера: {d.x + 1} {d.y + 1}")
         return d
 
