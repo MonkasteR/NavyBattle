@@ -35,13 +35,13 @@ class Game:
         return field
 
     def greeting(self):
-        print(f'┌──────────────────────────────┐')
-        print(f'│       Игра морской бой       │')
-        print(f'├──────────────────────────────┤')
-        print(f'│ Введите координаты хода, два │')
+        print('┌──────────────────────────────┐')
+        print('│       Игра морской бой       │')
+        print('├──────────────────────────────┤')
+        print('│ Введите координаты хода, два │')
         print(f'│ числа от 1 до {self.size} через пробел │')
-        print(f'│ номер строки и номер столбца │')
-        print(f'└──────────────────────────────┘')
+        print('│ номер строки и номер столбца │')
+        print('└──────────────────────────────┘')
         return
 
     def loop(self):
@@ -140,7 +140,6 @@ class AI(Player):
 class Field:
     def __init__(self, hid=False, size=9):
         self.size = (size if size <= 9 else 9)
-        print(self.size)
         self.hid = hid
         self.count = 0
         self.busy = []
@@ -151,11 +150,8 @@ class Field:
         res = '  │'
         for i in range(self.size):
             res += f' {i + 1} │'
-        # res += '\n' + '  ┌' + '─┬'.join(['─' * 2] * self.size) + '─┐' + ' ' * 4
         for i, row in enumerate(self.field):
-            # res += '\n' + '  ├' + '─┼'.join(['─' * 2] * self.size) + '─┤' + ' ' * 4
             res += f'\n{i + 1} │ ' + ' │ '.join(row) + ' │'
-        # res += '\n' + '  └' + '─┴'.join(['─' * 2] * self.size) + '─┘' + ' ' * 4
         if self.hid:
             res = res.replace("█", " ")
         return res
