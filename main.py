@@ -42,7 +42,6 @@ class Game:
         print(f'│ числа от 1 до {self.size} через пробел │')
         print('│ номер строки и номер столбца │')
         print('└──────────────────────────────┘')
-        return
 
     def loop(self):
         num = 0
