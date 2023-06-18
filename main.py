@@ -132,7 +132,7 @@ class User(Player):
 
 class AI(Player):
     def ask(self):
-        d = Dot(randint(0, g.size), randint(0, g.size))
+        d = Dot(randint(0, g.size - 1), randint(0, g.size - 1))
         print(f"Ход компьютера: {d.x + 1} {d.y + 1}")
         return d
 
@@ -144,13 +144,13 @@ class Field:
         self.count = 0
         self.busy = []
         self.ships = []
-        self.field = [[" "] * self.size for _ in range(self.size)]
+        self.fld = [[" "] * self.size for _ in range(self.size)]
 
     def __str__(self):
         res = '  │'
         for i in range(self.size):
             res += f' {i + 1} │'
-        for i, row in enumerate(self.field):
+        for i, row in enumerate(self.fld):
             res += f'\n{i + 1} │ ' + ' │ '.join(row) + ' │'
         if self.hid:
             res = res.replace("█", " ")
@@ -165,7 +165,7 @@ class Field:
             if self.output(d) or d in self.busy:
                 raise BoardWrongShipException()
         for d in ship.dots:
-            self.field[d.x][d.y] = "█"
+            self.fld[d.x][d.y] = "█"
             self.busy.append(d)
 
         self.ships.append(ship)
@@ -182,7 +182,7 @@ class Field:
                 cur = Dot(d.x + dx, d.y + dy)
                 if not (self.output(cur)) and cur not in self.busy:
                     if verb:
-                        self.field[cur.x][cur.y] = "•"
+                        self.fld[cur.x][cur.y] = "•"
                     self.busy.append(cur)
 
     def shot(self, d):
@@ -197,7 +197,7 @@ class Field:
         for ship in self.ships:
             if d in ship.dots:
                 ship.lives -= 1
-                self.field[d.x][d.y] = "╳"
+                self.fld[d.x][d.y] = "╳"
                 if ship.lives == 0:
                     self.count += 1
                     self.contour(ship, verb=True)
@@ -207,7 +207,7 @@ class Field:
                     print("Корабль ранен!")
                     return True
 
-        self.field[d.x][d.y] = "•"
+        self.fld[d.x][d.y] = "•"
         print("Мимо!")
         return False
 
